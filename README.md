@@ -1,4 +1,4 @@
-# Instagram Media Insights Go Client
+# Instagram API Go Client
 
 A Go client library for accessing Instagram Media and Account Insights via the Facebook Graph API v24.0. This client is generated from OpenAPI/Swagger specifications and provides type-safe access to Instagram metrics.
 
