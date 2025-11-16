@@ -10,11 +10,10 @@ ifeq ($(VERSION),)
 VERSION := v2.13.1
 endif
 
-API_SPEC=api/v24.0/swagger.yaml
-API_SPEC_ACCOUNT=api/v24.0/swagger-account.yaml
-CLIENT_DIR=pkg/sdk/v24.0
-CLIENT_DIR_ACCOUNT=pkg/sdk-account/v24.0
-
+API_SPEC=api/v24.0/media/swagger.yaml
+API_SPEC_ACCOUNT=api/v24.0/account/swagger.yaml
+CLIENT_DIR=pkg/sdk/v24.0/media
+CLIENT_DIR_ACCOUNT=pkg/sdk/v24.0/account
 ## --------------------------------------
 ## Help
 ## --------------------------------------

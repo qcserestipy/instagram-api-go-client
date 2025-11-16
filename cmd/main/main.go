@@ -5,10 +5,10 @@ import (
 	"reflect"
 
 	"github.com/qcserestipy/instagram-api-go-client/pkg/media"
-	"github.com/qcserestipy/instagram-api-go-client/pkg/sdk/v24.0/client/insights"
+	"github.com/qcserestipy/instagram-api-go-client/pkg/sdk/v24.0/media/client/insights"
 
 	"github.com/qcserestipy/instagram-api-go-client/pkg/account"
-	accinsights "github.com/qcserestipy/instagram-api-go-client/pkg/sdk-account/v24.0/client/insights"
+	accinsights "github.com/qcserestipy/instagram-api-go-client/pkg/sdk/v24.0/account/client/insights"
 	"github.com/sirupsen/logrus"
 )
 

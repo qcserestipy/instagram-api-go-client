@@ -5,8 +5,8 @@ import (
 	"sync"
 
 	"github.com/qcserestipy/instagram-api-go-client/pkg/config"
-	accountclient "github.com/qcserestipy/instagram-api-go-client/pkg/sdk-account/v24.0/client"
-	mediaclient "github.com/qcserestipy/instagram-api-go-client/pkg/sdk/v24.0/client"
+	accountclient "github.com/qcserestipy/instagram-api-go-client/pkg/sdk/v24.0/account/client"
+	mediaclient "github.com/qcserestipy/instagram-api-go-client/pkg/sdk/v24.0/media/client"
 )
 
 // InstagramClient holds both media and account API clients

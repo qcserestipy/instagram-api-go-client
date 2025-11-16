@@ -2,7 +2,7 @@ package account
 
 import (
 	"github.com/qcserestipy/instagram-api-go-client/pkg/client"
-	"github.com/qcserestipy/instagram-api-go-client/pkg/sdk-account/v24.0/client/insights"
+	"github.com/qcserestipy/instagram-api-go-client/pkg/sdk/v24.0/account/client/insights"
 )
 
 func GetInsightsByAccountID(params *insights.GetInsightsByAccountIDParams) (*insights.GetInsightsByAccountIDOK, error) {
