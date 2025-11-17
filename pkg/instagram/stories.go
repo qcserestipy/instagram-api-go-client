@@ -1,0 +1,113 @@
+package instagram
+
+import (
+	"math"
+
+	"github.com/qcserestipy/instagram-api-go-client/pkg/account"
+	"github.com/qcserestipy/instagram-api-go-client/pkg/media"
+	mediaInsightsModel "github.com/qcserestipy/instagram-api-go-client/pkg/sdk/v24.0/media/client/insights"
+	mediaApiModel "github.com/qcserestipy/instagram-api-go-client/pkg/sdk/v24.0/media/client/media"
+	"github.com/sirupsen/logrus"
+)
+
+// GetReels fetches all reels (VIDEO media) for a given Instagram account
+// and returns them with their metrics (views, likes, comments, caption).
+// since and until are optional Unix timestamp filters - pass nil to omit them.
+func GetStories(accountID string) ([]Story, error) {
+	var stories []Story
+
+	// Get all media for the account
+	accountMediaResponse, err := account.GetStoriesByUserID(accountID)
+	if err != nil {
+		return nil, err
+	}
+
+	// Collect media IDs
+	storyIDs := []string{}
+	for _, data := range accountMediaResponse.Payload.Data {
+		storyIDs = append(storyIDs, data.ID)
+	}
+
+	// Fetch details for each media item
+	for _, storyID := range storyIDs {
+		fields := "media_product_type,timestamp"
+		mediaApiResponse, err := media.GetMediaByID(
+			&mediaApiModel.GetMediaByIDParams{
+				InstagramMediaID: storyID,
+				Fields:           &fields,
+			},
+		)
+		if err != nil {
+			logrus.Warnf("Could not fetch media %s: %v", storyID, err)
+			continue
+		}
+
+		// Only process VIDEO media (STORY)
+		if mediaApiResponse.Payload.MediaProductType != "STORY" {
+			continue
+		}
+
+		// Fetch insights for view count using "views" metric
+		var follows, navigation, profile_activity, profile_visits, reach, replies, shares, total_interactions, views int
+		mediaInsightsApiResponse, err := media.GetInsightsByMediaID(
+			&mediaInsightsModel.GetInsightsByMediaIDParams{
+				InstagramMediaID: storyID,
+				Metric:           "follows,navigation,profile_activity,profile_visits,reach,replies,shares,total_interactions,views",
+			},
+		)
+		if err != nil {
+			logrus.Warnf("Could not fetch media insights %s: %v", storyID, err)
+		} else if mediaInsightsApiResponse.Payload != nil &&
+			mediaInsightsApiResponse.Payload.Data != nil &&
+			len(mediaInsightsApiResponse.Payload.Data) > 0 &&
+			len(mediaInsightsApiResponse.Payload.Data[0].Values) > 0 {
+			for _, data := range mediaInsightsApiResponse.Payload.Data {
+				if len(data.Values) > 0 {
+					switch data.Name {
+					case "follows":
+						views = int(data.Values[0].Value)
+					case "navigation":
+						navigation = int(data.Values[0].Value)
+					case "profile_activity":
+						profile_activity = int(data.Values[0].Value)
+					case "profile_visits":
+						profile_visits = int(data.Values[0].Value)
+					case "reach":
+						reach = int(data.Values[0].Value)
+					case "replies":
+						replies = int(data.Values[0].Value)
+					case "shares":
+						shares = int(data.Values[0].Value)
+					case "total_interactions":
+						total_interactions = int(data.Values[0].Value)
+					case "views":
+						views = int(data.Values[0].Value)
+
+					}
+				}
+			}
+		}
+
+		engagementViews := 0.0
+		if views > 0 {
+			engagementViews = float64(replies+shares+navigation+profile_activity+profile_visits+follows+total_interactions) / float64(views) * 100
+		}
+
+		stories = append(stories, Story{
+			ID:                mediaApiResponse.Payload.ID,
+			Views:             views,
+			Reach:             reach,
+			Replies:           replies,
+			Shares:            shares,
+			Navigation:        navigation,
+			ProfileActivity:   profile_activity,
+			ProfileVisits:     profile_visits,
+			Follows:           follows,
+			TotalInteractions: total_interactions,
+			DateTime:          mediaApiResponse.Payload.Timestamp,
+			EngagementViews:   math.Round(engagementViews*100) / 100,
+		})
+	}
+
+	return stories, nil
+}

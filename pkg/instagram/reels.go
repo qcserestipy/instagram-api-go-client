@@ -35,7 +35,7 @@ func GetReels(accountID string, since *int64, until *int64) ([]Reel, error) {
 
 	// Fetch details for each media item
 	for _, reelID := range reelIDs {
-		fields := "media_type,like_count,comments_count,caption,timestamp"
+		fields := "media_product_type,like_count,comments_count,caption,timestamp"
 		mediaApiResponse, err := media.GetMediaByID(
 			&mediaApiModel.GetMediaByIDParams{
 				InstagramMediaID: reelID,
@@ -48,7 +48,7 @@ func GetReels(accountID string, since *int64, until *int64) ([]Reel, error) {
 		}
 
 		// Only process VIDEO media (reels)
-		if mediaApiResponse.Payload.MediaType != "VIDEO" {
+		if mediaApiResponse.Payload.MediaProductType != "REELS" {
 			continue
 		}
 
