@@ -12,8 +12,10 @@ endif
 
 API_SPEC=api/v24.0/media/swagger.yaml
 API_SPEC_ACCOUNT=api/v24.0/account/swagger.yaml
+API_SPEC_PAGE=api/v24.0/page/swagger.yaml
 CLIENT_DIR=pkg/sdk/v24.0/media
 CLIENT_DIR_ACCOUNT=pkg/sdk/v24.0/account
+CLIENT_DIR_PAGE=pkg/sdk/v24.0/page
 ## --------------------------------------
 ## Help
 ## --------------------------------------
@@ -33,8 +35,12 @@ gen-api-client: ## Generate goswagger client for media insights
 gen-api-client-account: ## Generate goswagger client for account insights
 	@$(SWAGGER) generate client -f ${API_SPEC_ACCOUNT} --target=$(CLIENT_DIR_ACCOUNT) --template=stratoscale --additional-initialism=CVE --additional-initialism=GC --additional-initialism=OIDC
 
+.PHONY: gen-api-client-page
+gen-api-client-page: ## Generate goswagger client for page insights
+	@$(SWAGGER) generate client -f ${API_SPEC_PAGE} --target=$(CLIENT_DIR_PAGE) --template=stratoscale --additional-initialism=CVE --additional-initialism=GC --additional-initialism=OIDC
+
 .PHONY: gen-all-clients
-gen-all-clients: gen-api-client gen-api-client-account ## Generate all API clients
+gen-all-clients: gen-api-client gen-api-client-account gen-api-client-page ## Generate all API clients
 
 .PHONY: build
 build: ## Build the main application

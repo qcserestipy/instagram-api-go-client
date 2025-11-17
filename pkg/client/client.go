@@ -7,12 +7,14 @@ import (
 	"github.com/qcserestipy/instagram-api-go-client/pkg/config"
 	accountclient "github.com/qcserestipy/instagram-api-go-client/pkg/sdk/v24.0/account/client"
 	mediaclient "github.com/qcserestipy/instagram-api-go-client/pkg/sdk/v24.0/media/client"
+	pageclient "github.com/qcserestipy/instagram-api-go-client/pkg/sdk/v24.0/page/client"
 )
 
 // InstagramClient holds both media and account API clients
 type InstagramClient struct {
 	Media   *mediaclient.InstagramMediaInsightsAPI
 	Account *accountclient.InstagramAccountInsightsAPI
+	Page    *pageclient.FacebookPageAPI
 }
 
 var (
@@ -42,9 +44,16 @@ func Get() (*InstagramClient, error) {
 			AuthInfo: authInfo,
 		}
 
+		// Create page client
+		pageCfg := pageclient.Config{
+			URL:      apiURL,
+			AuthInfo: authInfo,
+		}
+
 		instance = &InstagramClient{
 			Media:   mediaclient.New(mediaCfg),
 			Account: accountclient.New(accountCfg),
+			Page:    pageclient.New(pageCfg),
 		}
 	})
 	return instance, initErr
