@@ -57,10 +57,11 @@ func GetReels(accountID string, since *int64, until *int64) ([]Reel, error) {
 		reach := 0
 		shares := 0
 		saved := 0
+		totalInteractions := 0
 		mediaInsightsApiResponse, err := media.GetInsightsByMediaID(
 			&mediaInsightsModel.GetInsightsByMediaIDParams{
 				InstagramMediaID: reelID,
-				Metric:           "views,reach,shares,saved",
+				Metric:           "views,reach,shares,saved,total_interactions",
 			},
 		)
 		if err != nil {
@@ -80,6 +81,8 @@ func GetReels(accountID string, since *int64, until *int64) ([]Reel, error) {
 						shares = int(data.Values[0].Value)
 					case "saved":
 						saved = int(data.Values[0].Value)
+					case "total_interactions":
+						totalInteractions = int(data.Values[0].Value)
 					}
 				}
 			}
@@ -87,20 +90,21 @@ func GetReels(accountID string, since *int64, until *int64) ([]Reel, error) {
 
 		engagementViews := 0.0
 		if views > 0 {
-			engagementViews = float64(int(mediaApiResponse.Payload.LikeCount)+int(mediaApiResponse.Payload.CommentsCount)+shares+saved) / float64(views) * 100
+			engagementViews = float64(totalInteractions) / float64(views) * 100
 		}
 
 		reels = append(reels, Reel{
-			ID:              mediaApiResponse.Payload.ID,
-			Views:           views,
-			Reach:           reach,
-			Shares:          shares,
-			Saves:           saved,
-			Likes:           int(mediaApiResponse.Payload.LikeCount),
-			Comments:        int(mediaApiResponse.Payload.CommentsCount),
-			Caption:         mediaApiResponse.Payload.Caption,
-			DateTime:        mediaApiResponse.Payload.Timestamp,
-			EngagementViews: math.Round(engagementViews*100) / 100,
+			ID:                mediaApiResponse.Payload.ID,
+			Views:             views,
+			Reach:             reach,
+			Shares:            shares,
+			Saves:             saved,
+			Likes:             int(mediaApiResponse.Payload.LikeCount),
+			Comments:          int(mediaApiResponse.Payload.CommentsCount),
+			Caption:           mediaApiResponse.Payload.Caption,
+			DateTime:          mediaApiResponse.Payload.Timestamp,
+			TotalInteractions: totalInteractions,
+			EngagementViews:   math.Round(engagementViews*100) / 100,
 		})
 	}
 

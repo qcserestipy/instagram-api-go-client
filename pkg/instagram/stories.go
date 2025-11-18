@@ -90,7 +90,7 @@ func GetStories(accountID string) ([]Story, error) {
 
 		engagementViews := 0.0
 		if views > 0 {
-			engagementViews = float64(replies+shares+navigation+profile_activity+profile_visits+follows+total_interactions) / float64(views) * 100
+			engagementViews = float64(total_interactions) / float64(views) * 100
 		}
 
 		stories = append(stories, Story{
