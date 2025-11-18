@@ -7,13 +7,14 @@ package comments
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/go-openapi/runtime"
 
 	strfmt "github.com/go-openapi/strfmt"
 )
 
-//go:generate mockery -name API -inpkg
+//go:generate mockery --name API --keeptree --with-expecter --case underscore
 
 // API is the interface of the comments client
 type API interface {
@@ -87,8 +88,23 @@ func (a *Client) CreateCommentOnMedia(ctx context.Context, params *CreateComment
 	if err != nil {
 		return nil, err
 	}
-	return result.(*CreateCommentOnMediaOK), nil
-
+	switch value := result.(type) {
+	case *CreateCommentOnMediaOK:
+		return value, nil
+	case *CreateCommentOnMediaBadRequest:
+		return nil, runtime.NewAPIError("unsuccessful response", value, value.Code())
+	case *CreateCommentOnMediaUnauthorized:
+		return nil, runtime.NewAPIError("unsuccessful response", value, value.Code())
+	case *CreateCommentOnMediaForbidden:
+		return nil, runtime.NewAPIError("unsuccessful response", value, value.Code())
+	case *CreateCommentOnMediaNotFound:
+		return nil, runtime.NewAPIError("unsuccessful response", value, value.Code())
+	case *CreateCommentOnMediaInternalServerError:
+		return nil, runtime.NewAPIError("unsuccessful response", value, value.Code())
+	}
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for CreateCommentOnMedia: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -123,6 +139,21 @@ func (a *Client) GetCommentsByMediaID(ctx context.Context, params *GetCommentsBy
 	if err != nil {
 		return nil, err
 	}
-	return result.(*GetCommentsByMediaIDOK), nil
-
+	switch value := result.(type) {
+	case *GetCommentsByMediaIDOK:
+		return value, nil
+	case *GetCommentsByMediaIDBadRequest:
+		return nil, runtime.NewAPIError("unsuccessful response", value, value.Code())
+	case *GetCommentsByMediaIDUnauthorized:
+		return nil, runtime.NewAPIError("unsuccessful response", value, value.Code())
+	case *GetCommentsByMediaIDForbidden:
+		return nil, runtime.NewAPIError("unsuccessful response", value, value.Code())
+	case *GetCommentsByMediaIDNotFound:
+		return nil, runtime.NewAPIError("unsuccessful response", value, value.Code())
+	case *GetCommentsByMediaIDInternalServerError:
+		return nil, runtime.NewAPIError("unsuccessful response", value, value.Code())
+	}
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for GetCommentsByMediaID: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }

@@ -60,7 +60,7 @@ func (o *UpdateMediaCommentsReader) ReadResponse(response runtime.ClientResponse
 		}
 		return nil, result
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /{instagram_media_id}] UpdateMediaComments", response, response.Code())
 	}
 }
 
@@ -101,6 +101,11 @@ func (o *UpdateMediaCommentsOK) IsServerError() bool {
 // IsCode returns true when this update media comments o k response a status code equal to that given
 func (o *UpdateMediaCommentsOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the update media comments o k response
+func (o *UpdateMediaCommentsOK) Code() int {
+	return 200
 }
 
 func (o *UpdateMediaCommentsOK) Error() string {
@@ -169,6 +174,11 @@ func (o *UpdateMediaCommentsBadRequest) IsServerError() bool {
 // IsCode returns true when this update media comments bad request response a status code equal to that given
 func (o *UpdateMediaCommentsBadRequest) IsCode(code int) bool {
 	return code == 400
+}
+
+// Code gets the status code for the update media comments bad request response
+func (o *UpdateMediaCommentsBadRequest) Code() int {
+	return 400
 }
 
 func (o *UpdateMediaCommentsBadRequest) Error() string {
@@ -246,6 +256,11 @@ func (o *UpdateMediaCommentsUnauthorized) IsCode(code int) bool {
 	return code == 401
 }
 
+// Code gets the status code for the update media comments unauthorized response
+func (o *UpdateMediaCommentsUnauthorized) Code() int {
+	return 401
+}
+
 func (o *UpdateMediaCommentsUnauthorized) Error() string {
 	return fmt.Sprintf("[POST /{instagram_media_id}][%d] updateMediaCommentsUnauthorized  %+v", 401, o.Payload)
 }
@@ -319,6 +334,11 @@ func (o *UpdateMediaCommentsForbidden) IsServerError() bool {
 // IsCode returns true when this update media comments forbidden response a status code equal to that given
 func (o *UpdateMediaCommentsForbidden) IsCode(code int) bool {
 	return code == 403
+}
+
+// Code gets the status code for the update media comments forbidden response
+func (o *UpdateMediaCommentsForbidden) Code() int {
+	return 403
 }
 
 func (o *UpdateMediaCommentsForbidden) Error() string {
@@ -396,6 +416,11 @@ func (o *UpdateMediaCommentsNotFound) IsCode(code int) bool {
 	return code == 404
 }
 
+// Code gets the status code for the update media comments not found response
+func (o *UpdateMediaCommentsNotFound) Code() int {
+	return 404
+}
+
 func (o *UpdateMediaCommentsNotFound) Error() string {
 	return fmt.Sprintf("[POST /{instagram_media_id}][%d] updateMediaCommentsNotFound  %+v", 404, o.Payload)
 }
@@ -469,6 +494,11 @@ func (o *UpdateMediaCommentsInternalServerError) IsServerError() bool {
 // IsCode returns true when this update media comments internal server error response a status code equal to that given
 func (o *UpdateMediaCommentsInternalServerError) IsCode(code int) bool {
 	return code == 500
+}
+
+// Code gets the status code for the update media comments internal server error response
+func (o *UpdateMediaCommentsInternalServerError) Code() int {
+	return 500
 }
 
 func (o *UpdateMediaCommentsInternalServerError) Error() string {

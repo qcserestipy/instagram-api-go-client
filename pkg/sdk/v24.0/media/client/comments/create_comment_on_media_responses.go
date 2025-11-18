@@ -60,7 +60,7 @@ func (o *CreateCommentOnMediaReader) ReadResponse(response runtime.ClientRespons
 		}
 		return nil, result
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /{instagram_media_id}/comments] CreateCommentOnMedia", response, response.Code())
 	}
 }
 
@@ -101,6 +101,11 @@ func (o *CreateCommentOnMediaOK) IsServerError() bool {
 // IsCode returns true when this create comment on media o k response a status code equal to that given
 func (o *CreateCommentOnMediaOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the create comment on media o k response
+func (o *CreateCommentOnMediaOK) Code() int {
+	return 200
 }
 
 func (o *CreateCommentOnMediaOK) Error() string {
@@ -169,6 +174,11 @@ func (o *CreateCommentOnMediaBadRequest) IsServerError() bool {
 // IsCode returns true when this create comment on media bad request response a status code equal to that given
 func (o *CreateCommentOnMediaBadRequest) IsCode(code int) bool {
 	return code == 400
+}
+
+// Code gets the status code for the create comment on media bad request response
+func (o *CreateCommentOnMediaBadRequest) Code() int {
+	return 400
 }
 
 func (o *CreateCommentOnMediaBadRequest) Error() string {
@@ -246,6 +256,11 @@ func (o *CreateCommentOnMediaUnauthorized) IsCode(code int) bool {
 	return code == 401
 }
 
+// Code gets the status code for the create comment on media unauthorized response
+func (o *CreateCommentOnMediaUnauthorized) Code() int {
+	return 401
+}
+
 func (o *CreateCommentOnMediaUnauthorized) Error() string {
 	return fmt.Sprintf("[POST /{instagram_media_id}/comments][%d] createCommentOnMediaUnauthorized  %+v", 401, o.Payload)
 }
@@ -319,6 +334,11 @@ func (o *CreateCommentOnMediaForbidden) IsServerError() bool {
 // IsCode returns true when this create comment on media forbidden response a status code equal to that given
 func (o *CreateCommentOnMediaForbidden) IsCode(code int) bool {
 	return code == 403
+}
+
+// Code gets the status code for the create comment on media forbidden response
+func (o *CreateCommentOnMediaForbidden) Code() int {
+	return 403
 }
 
 func (o *CreateCommentOnMediaForbidden) Error() string {
@@ -396,6 +416,11 @@ func (o *CreateCommentOnMediaNotFound) IsCode(code int) bool {
 	return code == 404
 }
 
+// Code gets the status code for the create comment on media not found response
+func (o *CreateCommentOnMediaNotFound) Code() int {
+	return 404
+}
+
 func (o *CreateCommentOnMediaNotFound) Error() string {
 	return fmt.Sprintf("[POST /{instagram_media_id}/comments][%d] createCommentOnMediaNotFound  %+v", 404, o.Payload)
 }
@@ -469,6 +494,11 @@ func (o *CreateCommentOnMediaInternalServerError) IsServerError() bool {
 // IsCode returns true when this create comment on media internal server error response a status code equal to that given
 func (o *CreateCommentOnMediaInternalServerError) IsCode(code int) bool {
 	return code == 500
+}
+
+// Code gets the status code for the create comment on media internal server error response
+func (o *CreateCommentOnMediaInternalServerError) Code() int {
+	return 500
 }
 
 func (o *CreateCommentOnMediaInternalServerError) Error() string {

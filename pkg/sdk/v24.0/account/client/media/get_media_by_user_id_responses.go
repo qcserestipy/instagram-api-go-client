@@ -60,7 +60,7 @@ func (o *GetMediaByUserIDReader) ReadResponse(response runtime.ClientResponse, c
 		}
 		return nil, result
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /{instagram_account_id}/media] GetMediaByUserID", response, response.Code())
 	}
 }
 
@@ -101,6 +101,11 @@ func (o *GetMediaByUserIDOK) IsServerError() bool {
 // IsCode returns true when this get media by user Id o k response a status code equal to that given
 func (o *GetMediaByUserIDOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get media by user Id o k response
+func (o *GetMediaByUserIDOK) Code() int {
+	return 200
 }
 
 func (o *GetMediaByUserIDOK) Error() string {
@@ -169,6 +174,11 @@ func (o *GetMediaByUserIDBadRequest) IsServerError() bool {
 // IsCode returns true when this get media by user Id bad request response a status code equal to that given
 func (o *GetMediaByUserIDBadRequest) IsCode(code int) bool {
 	return code == 400
+}
+
+// Code gets the status code for the get media by user Id bad request response
+func (o *GetMediaByUserIDBadRequest) Code() int {
+	return 400
 }
 
 func (o *GetMediaByUserIDBadRequest) Error() string {
@@ -246,6 +256,11 @@ func (o *GetMediaByUserIDUnauthorized) IsCode(code int) bool {
 	return code == 401
 }
 
+// Code gets the status code for the get media by user Id unauthorized response
+func (o *GetMediaByUserIDUnauthorized) Code() int {
+	return 401
+}
+
 func (o *GetMediaByUserIDUnauthorized) Error() string {
 	return fmt.Sprintf("[GET /{instagram_account_id}/media][%d] getMediaByUserIdUnauthorized  %+v", 401, o.Payload)
 }
@@ -319,6 +334,11 @@ func (o *GetMediaByUserIDForbidden) IsServerError() bool {
 // IsCode returns true when this get media by user Id forbidden response a status code equal to that given
 func (o *GetMediaByUserIDForbidden) IsCode(code int) bool {
 	return code == 403
+}
+
+// Code gets the status code for the get media by user Id forbidden response
+func (o *GetMediaByUserIDForbidden) Code() int {
+	return 403
 }
 
 func (o *GetMediaByUserIDForbidden) Error() string {
@@ -396,6 +416,11 @@ func (o *GetMediaByUserIDNotFound) IsCode(code int) bool {
 	return code == 404
 }
 
+// Code gets the status code for the get media by user Id not found response
+func (o *GetMediaByUserIDNotFound) Code() int {
+	return 404
+}
+
 func (o *GetMediaByUserIDNotFound) Error() string {
 	return fmt.Sprintf("[GET /{instagram_account_id}/media][%d] getMediaByUserIdNotFound  %+v", 404, o.Payload)
 }
@@ -469,6 +494,11 @@ func (o *GetMediaByUserIDInternalServerError) IsServerError() bool {
 // IsCode returns true when this get media by user Id internal server error response a status code equal to that given
 func (o *GetMediaByUserIDInternalServerError) IsCode(code int) bool {
 	return code == 500
+}
+
+// Code gets the status code for the get media by user Id internal server error response
+func (o *GetMediaByUserIDInternalServerError) Code() int {
+	return 500
 }
 
 func (o *GetMediaByUserIDInternalServerError) Error() string {

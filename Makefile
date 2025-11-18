@@ -3,12 +3,8 @@ SHELL := /usr/bin/env bash
 .DEFAULT_GOAL := help
 
 DOCKERCMD=$(shell which docker)
-SWAGGER_VERSION=v0.30.3
+SWAGGER_VERSION=v0.30.5
 SWAGGER := $(DOCKERCMD) run --rm -t -u "$(shell id -u):$(shell id -g)" -v $(shell pwd):/src -w /src quay.io/goswagger/swagger:$(SWAGGER_VERSION)
-
-ifeq ($(VERSION),)
-VERSION := v2.13.1
-endif
 
 API_SPEC=api/v24.0/media/swagger.yaml
 API_SPEC_ACCOUNT=api/v24.0/account/swagger.yaml
@@ -29,14 +25,17 @@ help: ## Display this help
 
 .PHONY: gen-api-client
 gen-api-client: ## Generate goswagger client for media insights
+	mkdir -p $(CLIENT_DIR)
 	@$(SWAGGER) generate client -f ${API_SPEC} --target=$(CLIENT_DIR) --template=stratoscale --additional-initialism=CVE --additional-initialism=GC --additional-initialism=OIDC
 
 .PHONY: gen-api-client-account
 gen-api-client-account: ## Generate goswagger client for account insights
+	mkdir -p $(CLIENT_DIR_ACCOUNT)
 	@$(SWAGGER) generate client -f ${API_SPEC_ACCOUNT} --target=$(CLIENT_DIR_ACCOUNT) --template=stratoscale --additional-initialism=CVE --additional-initialism=GC --additional-initialism=OIDC
 
 .PHONY: gen-api-client-page
 gen-api-client-page: ## Generate goswagger client for page insights
+	mkdir -p $(CLIENT_DIR_PAGE)
 	@$(SWAGGER) generate client -f ${API_SPEC_PAGE} --target=$(CLIENT_DIR_PAGE) --template=stratoscale --additional-initialism=CVE --additional-initialism=GC --additional-initialism=OIDC
 
 .PHONY: gen-all-clients
@@ -48,7 +47,7 @@ build: ## Build the main application
 
 .PHONY: cleanup
 cleanup: ## Clean up generated client code
-	rm -rf pkg/sdk/v24.0/models pkg/sdk/v24.0/client pkg/sdk-account/v24.0/models pkg/sdk-account/v24.0/client
+	rm -rf pkg/sdk/v24.0/*
 .PHONY: test
 test: ## run the test
 	go test ./...
@@ -58,8 +57,5 @@ update-submodule:
 	@echo "Updating api submodule..."
 	@cd api && git stash && git pull --rebase && cd ..
 	@echo "Submodule updated successfully"
-
-get-go-version:
-	@echo "$(VERSION)" | sed -E "s/v([0-9]+)\.([0-9]+)\.([0-9]+)/v0.\1\2.\3/g" -
 
 all: cleanup gen-all-clients

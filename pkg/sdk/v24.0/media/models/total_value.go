@@ -85,6 +85,11 @@ func (m *TotalValue) contextValidateBreakdowns(ctx context.Context, formats strf
 	for i := 0; i < len(m.Breakdowns); i++ {
 
 		if m.Breakdowns[i] != nil {
+
+			if swag.IsZero(m.Breakdowns[i]) { // not required
+				return nil
+			}
+
 			if err := m.Breakdowns[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("breakdowns" + "." + strconv.Itoa(i))

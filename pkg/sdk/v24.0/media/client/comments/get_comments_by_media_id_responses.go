@@ -60,7 +60,7 @@ func (o *GetCommentsByMediaIDReader) ReadResponse(response runtime.ClientRespons
 		}
 		return nil, result
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /{instagram_media_id}/comments] GetCommentsByMediaID", response, response.Code())
 	}
 }
 
@@ -101,6 +101,11 @@ func (o *GetCommentsByMediaIDOK) IsServerError() bool {
 // IsCode returns true when this get comments by media Id o k response a status code equal to that given
 func (o *GetCommentsByMediaIDOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get comments by media Id o k response
+func (o *GetCommentsByMediaIDOK) Code() int {
+	return 200
 }
 
 func (o *GetCommentsByMediaIDOK) Error() string {
@@ -169,6 +174,11 @@ func (o *GetCommentsByMediaIDBadRequest) IsServerError() bool {
 // IsCode returns true when this get comments by media Id bad request response a status code equal to that given
 func (o *GetCommentsByMediaIDBadRequest) IsCode(code int) bool {
 	return code == 400
+}
+
+// Code gets the status code for the get comments by media Id bad request response
+func (o *GetCommentsByMediaIDBadRequest) Code() int {
+	return 400
 }
 
 func (o *GetCommentsByMediaIDBadRequest) Error() string {
@@ -246,6 +256,11 @@ func (o *GetCommentsByMediaIDUnauthorized) IsCode(code int) bool {
 	return code == 401
 }
 
+// Code gets the status code for the get comments by media Id unauthorized response
+func (o *GetCommentsByMediaIDUnauthorized) Code() int {
+	return 401
+}
+
 func (o *GetCommentsByMediaIDUnauthorized) Error() string {
 	return fmt.Sprintf("[GET /{instagram_media_id}/comments][%d] getCommentsByMediaIdUnauthorized  %+v", 401, o.Payload)
 }
@@ -319,6 +334,11 @@ func (o *GetCommentsByMediaIDForbidden) IsServerError() bool {
 // IsCode returns true when this get comments by media Id forbidden response a status code equal to that given
 func (o *GetCommentsByMediaIDForbidden) IsCode(code int) bool {
 	return code == 403
+}
+
+// Code gets the status code for the get comments by media Id forbidden response
+func (o *GetCommentsByMediaIDForbidden) Code() int {
+	return 403
 }
 
 func (o *GetCommentsByMediaIDForbidden) Error() string {
@@ -396,6 +416,11 @@ func (o *GetCommentsByMediaIDNotFound) IsCode(code int) bool {
 	return code == 404
 }
 
+// Code gets the status code for the get comments by media Id not found response
+func (o *GetCommentsByMediaIDNotFound) Code() int {
+	return 404
+}
+
 func (o *GetCommentsByMediaIDNotFound) Error() string {
 	return fmt.Sprintf("[GET /{instagram_media_id}/comments][%d] getCommentsByMediaIdNotFound  %+v", 404, o.Payload)
 }
@@ -469,6 +494,11 @@ func (o *GetCommentsByMediaIDInternalServerError) IsServerError() bool {
 // IsCode returns true when this get comments by media Id internal server error response a status code equal to that given
 func (o *GetCommentsByMediaIDInternalServerError) IsCode(code int) bool {
 	return code == 500
+}
+
+// Code gets the status code for the get comments by media Id internal server error response
+func (o *GetCommentsByMediaIDInternalServerError) Code() int {
+	return 500
 }
 
 func (o *GetCommentsByMediaIDInternalServerError) Error() string {

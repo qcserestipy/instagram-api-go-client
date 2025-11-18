@@ -68,8 +68,8 @@ func New(c Config) *InstagramMediaInsightsAPI {
 
 // InstagramMediaInsightsAPI is a client for instagram media insights API
 type InstagramMediaInsightsAPI struct {
-	Comments  *comments.Client
-	Insights  *insights.Client
-	Media     *media.Client
+	Comments  comments.API
+	Insights  insights.API
+	Media     media.API
 	Transport runtime.ClientTransport
 }

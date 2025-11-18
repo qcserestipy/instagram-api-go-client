@@ -60,7 +60,7 @@ func (o *CreateMediaContainerReader) ReadResponse(response runtime.ClientRespons
 		}
 		return nil, result
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /{instagram_account_id}/media] CreateMediaContainer", response, response.Code())
 	}
 }
 
@@ -101,6 +101,11 @@ func (o *CreateMediaContainerOK) IsServerError() bool {
 // IsCode returns true when this create media container o k response a status code equal to that given
 func (o *CreateMediaContainerOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the create media container o k response
+func (o *CreateMediaContainerOK) Code() int {
+	return 200
 }
 
 func (o *CreateMediaContainerOK) Error() string {
@@ -169,6 +174,11 @@ func (o *CreateMediaContainerBadRequest) IsServerError() bool {
 // IsCode returns true when this create media container bad request response a status code equal to that given
 func (o *CreateMediaContainerBadRequest) IsCode(code int) bool {
 	return code == 400
+}
+
+// Code gets the status code for the create media container bad request response
+func (o *CreateMediaContainerBadRequest) Code() int {
+	return 400
 }
 
 func (o *CreateMediaContainerBadRequest) Error() string {
@@ -246,6 +256,11 @@ func (o *CreateMediaContainerUnauthorized) IsCode(code int) bool {
 	return code == 401
 }
 
+// Code gets the status code for the create media container unauthorized response
+func (o *CreateMediaContainerUnauthorized) Code() int {
+	return 401
+}
+
 func (o *CreateMediaContainerUnauthorized) Error() string {
 	return fmt.Sprintf("[POST /{instagram_account_id}/media][%d] createMediaContainerUnauthorized  %+v", 401, o.Payload)
 }
@@ -319,6 +334,11 @@ func (o *CreateMediaContainerForbidden) IsServerError() bool {
 // IsCode returns true when this create media container forbidden response a status code equal to that given
 func (o *CreateMediaContainerForbidden) IsCode(code int) bool {
 	return code == 403
+}
+
+// Code gets the status code for the create media container forbidden response
+func (o *CreateMediaContainerForbidden) Code() int {
+	return 403
 }
 
 func (o *CreateMediaContainerForbidden) Error() string {
@@ -396,6 +416,11 @@ func (o *CreateMediaContainerNotFound) IsCode(code int) bool {
 	return code == 404
 }
 
+// Code gets the status code for the create media container not found response
+func (o *CreateMediaContainerNotFound) Code() int {
+	return 404
+}
+
 func (o *CreateMediaContainerNotFound) Error() string {
 	return fmt.Sprintf("[POST /{instagram_account_id}/media][%d] createMediaContainerNotFound  %+v", 404, o.Payload)
 }
@@ -469,6 +494,11 @@ func (o *CreateMediaContainerInternalServerError) IsServerError() bool {
 // IsCode returns true when this create media container internal server error response a status code equal to that given
 func (o *CreateMediaContainerInternalServerError) IsCode(code int) bool {
 	return code == 500
+}
+
+// Code gets the status code for the create media container internal server error response
+func (o *CreateMediaContainerInternalServerError) Code() int {
+	return 500
 }
 
 func (o *CreateMediaContainerInternalServerError) Error() string {

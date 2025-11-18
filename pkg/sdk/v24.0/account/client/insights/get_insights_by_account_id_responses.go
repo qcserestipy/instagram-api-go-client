@@ -60,7 +60,7 @@ func (o *GetInsightsByAccountIDReader) ReadResponse(response runtime.ClientRespo
 		}
 		return nil, result
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /{instagram_account_id}/insights] GetInsightsByAccountID", response, response.Code())
 	}
 }
 
@@ -101,6 +101,11 @@ func (o *GetInsightsByAccountIDOK) IsServerError() bool {
 // IsCode returns true when this get insights by account Id o k response a status code equal to that given
 func (o *GetInsightsByAccountIDOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get insights by account Id o k response
+func (o *GetInsightsByAccountIDOK) Code() int {
+	return 200
 }
 
 func (o *GetInsightsByAccountIDOK) Error() string {
@@ -169,6 +174,11 @@ func (o *GetInsightsByAccountIDBadRequest) IsServerError() bool {
 // IsCode returns true when this get insights by account Id bad request response a status code equal to that given
 func (o *GetInsightsByAccountIDBadRequest) IsCode(code int) bool {
 	return code == 400
+}
+
+// Code gets the status code for the get insights by account Id bad request response
+func (o *GetInsightsByAccountIDBadRequest) Code() int {
+	return 400
 }
 
 func (o *GetInsightsByAccountIDBadRequest) Error() string {
@@ -246,6 +256,11 @@ func (o *GetInsightsByAccountIDUnauthorized) IsCode(code int) bool {
 	return code == 401
 }
 
+// Code gets the status code for the get insights by account Id unauthorized response
+func (o *GetInsightsByAccountIDUnauthorized) Code() int {
+	return 401
+}
+
 func (o *GetInsightsByAccountIDUnauthorized) Error() string {
 	return fmt.Sprintf("[GET /{instagram_account_id}/insights][%d] getInsightsByAccountIdUnauthorized  %+v", 401, o.Payload)
 }
@@ -319,6 +334,11 @@ func (o *GetInsightsByAccountIDForbidden) IsServerError() bool {
 // IsCode returns true when this get insights by account Id forbidden response a status code equal to that given
 func (o *GetInsightsByAccountIDForbidden) IsCode(code int) bool {
 	return code == 403
+}
+
+// Code gets the status code for the get insights by account Id forbidden response
+func (o *GetInsightsByAccountIDForbidden) Code() int {
+	return 403
 }
 
 func (o *GetInsightsByAccountIDForbidden) Error() string {
@@ -396,6 +416,11 @@ func (o *GetInsightsByAccountIDNotFound) IsCode(code int) bool {
 	return code == 404
 }
 
+// Code gets the status code for the get insights by account Id not found response
+func (o *GetInsightsByAccountIDNotFound) Code() int {
+	return 404
+}
+
 func (o *GetInsightsByAccountIDNotFound) Error() string {
 	return fmt.Sprintf("[GET /{instagram_account_id}/insights][%d] getInsightsByAccountIdNotFound  %+v", 404, o.Payload)
 }
@@ -469,6 +494,11 @@ func (o *GetInsightsByAccountIDInternalServerError) IsServerError() bool {
 // IsCode returns true when this get insights by account Id internal server error response a status code equal to that given
 func (o *GetInsightsByAccountIDInternalServerError) IsCode(code int) bool {
 	return code == 500
+}
+
+// Code gets the status code for the get insights by account Id internal server error response
+func (o *GetInsightsByAccountIDInternalServerError) Code() int {
+	return 500
 }
 
 func (o *GetInsightsByAccountIDInternalServerError) Error() string {

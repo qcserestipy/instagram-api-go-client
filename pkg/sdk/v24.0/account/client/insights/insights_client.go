@@ -7,13 +7,14 @@ package insights
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/go-openapi/runtime"
 
 	strfmt "github.com/go-openapi/strfmt"
 )
 
-//go:generate mockery -name API -inpkg
+//go:generate mockery --name API --keeptree --with-expecter --case underscore
 
 // API is the interface of the insights client
 type API interface {
@@ -94,6 +95,21 @@ func (a *Client) GetInsightsByAccountID(ctx context.Context, params *GetInsights
 	if err != nil {
 		return nil, err
 	}
-	return result.(*GetInsightsByAccountIDOK), nil
-
+	switch value := result.(type) {
+	case *GetInsightsByAccountIDOK:
+		return value, nil
+	case *GetInsightsByAccountIDBadRequest:
+		return nil, runtime.NewAPIError("unsuccessful response", value, value.Code())
+	case *GetInsightsByAccountIDUnauthorized:
+		return nil, runtime.NewAPIError("unsuccessful response", value, value.Code())
+	case *GetInsightsByAccountIDForbidden:
+		return nil, runtime.NewAPIError("unsuccessful response", value, value.Code())
+	case *GetInsightsByAccountIDNotFound:
+		return nil, runtime.NewAPIError("unsuccessful response", value, value.Code())
+	case *GetInsightsByAccountIDInternalServerError:
+		return nil, runtime.NewAPIError("unsuccessful response", value, value.Code())
+	}
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for GetInsightsByAccountID: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }

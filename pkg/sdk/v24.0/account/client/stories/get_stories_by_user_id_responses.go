@@ -60,7 +60,7 @@ func (o *GetStoriesByUserIDReader) ReadResponse(response runtime.ClientResponse,
 		}
 		return nil, result
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /{instagram_account_id}/stories] GetStoriesByUserID", response, response.Code())
 	}
 }
 
@@ -101,6 +101,11 @@ func (o *GetStoriesByUserIDOK) IsServerError() bool {
 // IsCode returns true when this get stories by user Id o k response a status code equal to that given
 func (o *GetStoriesByUserIDOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get stories by user Id o k response
+func (o *GetStoriesByUserIDOK) Code() int {
+	return 200
 }
 
 func (o *GetStoriesByUserIDOK) Error() string {
@@ -169,6 +174,11 @@ func (o *GetStoriesByUserIDBadRequest) IsServerError() bool {
 // IsCode returns true when this get stories by user Id bad request response a status code equal to that given
 func (o *GetStoriesByUserIDBadRequest) IsCode(code int) bool {
 	return code == 400
+}
+
+// Code gets the status code for the get stories by user Id bad request response
+func (o *GetStoriesByUserIDBadRequest) Code() int {
+	return 400
 }
 
 func (o *GetStoriesByUserIDBadRequest) Error() string {
@@ -246,6 +256,11 @@ func (o *GetStoriesByUserIDUnauthorized) IsCode(code int) bool {
 	return code == 401
 }
 
+// Code gets the status code for the get stories by user Id unauthorized response
+func (o *GetStoriesByUserIDUnauthorized) Code() int {
+	return 401
+}
+
 func (o *GetStoriesByUserIDUnauthorized) Error() string {
 	return fmt.Sprintf("[GET /{instagram_account_id}/stories][%d] getStoriesByUserIdUnauthorized  %+v", 401, o.Payload)
 }
@@ -319,6 +334,11 @@ func (o *GetStoriesByUserIDForbidden) IsServerError() bool {
 // IsCode returns true when this get stories by user Id forbidden response a status code equal to that given
 func (o *GetStoriesByUserIDForbidden) IsCode(code int) bool {
 	return code == 403
+}
+
+// Code gets the status code for the get stories by user Id forbidden response
+func (o *GetStoriesByUserIDForbidden) Code() int {
+	return 403
 }
 
 func (o *GetStoriesByUserIDForbidden) Error() string {
@@ -396,6 +416,11 @@ func (o *GetStoriesByUserIDNotFound) IsCode(code int) bool {
 	return code == 404
 }
 
+// Code gets the status code for the get stories by user Id not found response
+func (o *GetStoriesByUserIDNotFound) Code() int {
+	return 404
+}
+
 func (o *GetStoriesByUserIDNotFound) Error() string {
 	return fmt.Sprintf("[GET /{instagram_account_id}/stories][%d] getStoriesByUserIdNotFound  %+v", 404, o.Payload)
 }
@@ -469,6 +494,11 @@ func (o *GetStoriesByUserIDInternalServerError) IsServerError() bool {
 // IsCode returns true when this get stories by user Id internal server error response a status code equal to that given
 func (o *GetStoriesByUserIDInternalServerError) IsCode(code int) bool {
 	return code == 500
+}
+
+// Code gets the status code for the get stories by user Id internal server error response
+func (o *GetStoriesByUserIDInternalServerError) Code() int {
+	return 500
 }
 
 func (o *GetStoriesByUserIDInternalServerError) Error() string {

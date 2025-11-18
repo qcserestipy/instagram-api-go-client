@@ -60,7 +60,7 @@ func (o *GetPageAccessTokenReader) ReadResponse(response runtime.ClientResponse,
 		}
 		return nil, result
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /{page_id}] GetPageAccessToken", response, response.Code())
 	}
 }
 
@@ -101,6 +101,11 @@ func (o *GetPageAccessTokenOK) IsServerError() bool {
 // IsCode returns true when this get page access token o k response a status code equal to that given
 func (o *GetPageAccessTokenOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get page access token o k response
+func (o *GetPageAccessTokenOK) Code() int {
+	return 200
 }
 
 func (o *GetPageAccessTokenOK) Error() string {
@@ -166,6 +171,11 @@ func (o *GetPageAccessTokenBadRequest) IsCode(code int) bool {
 	return code == 400
 }
 
+// Code gets the status code for the get page access token bad request response
+func (o *GetPageAccessTokenBadRequest) Code() int {
+	return 400
+}
+
 func (o *GetPageAccessTokenBadRequest) Error() string {
 	return fmt.Sprintf("[GET /{page_id}][%d] getPageAccessTokenBadRequest  %+v", 400, o.Payload)
 }
@@ -227,6 +237,11 @@ func (o *GetPageAccessTokenUnauthorized) IsServerError() bool {
 // IsCode returns true when this get page access token unauthorized response a status code equal to that given
 func (o *GetPageAccessTokenUnauthorized) IsCode(code int) bool {
 	return code == 401
+}
+
+// Code gets the status code for the get page access token unauthorized response
+func (o *GetPageAccessTokenUnauthorized) Code() int {
+	return 401
 }
 
 func (o *GetPageAccessTokenUnauthorized) Error() string {
@@ -292,6 +307,11 @@ func (o *GetPageAccessTokenForbidden) IsCode(code int) bool {
 	return code == 403
 }
 
+// Code gets the status code for the get page access token forbidden response
+func (o *GetPageAccessTokenForbidden) Code() int {
+	return 403
+}
+
 func (o *GetPageAccessTokenForbidden) Error() string {
 	return fmt.Sprintf("[GET /{page_id}][%d] getPageAccessTokenForbidden  %+v", 403, o.Payload)
 }
@@ -355,6 +375,11 @@ func (o *GetPageAccessTokenNotFound) IsCode(code int) bool {
 	return code == 404
 }
 
+// Code gets the status code for the get page access token not found response
+func (o *GetPageAccessTokenNotFound) Code() int {
+	return 404
+}
+
 func (o *GetPageAccessTokenNotFound) Error() string {
 	return fmt.Sprintf("[GET /{page_id}][%d] getPageAccessTokenNotFound  %+v", 404, o.Payload)
 }
@@ -416,6 +441,11 @@ func (o *GetPageAccessTokenInternalServerError) IsServerError() bool {
 // IsCode returns true when this get page access token internal server error response a status code equal to that given
 func (o *GetPageAccessTokenInternalServerError) IsCode(code int) bool {
 	return code == 500
+}
+
+// Code gets the status code for the get page access token internal server error response
+func (o *GetPageAccessTokenInternalServerError) Code() int {
+	return 500
 }
 
 func (o *GetPageAccessTokenInternalServerError) Error() string {

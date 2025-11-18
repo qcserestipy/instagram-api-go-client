@@ -125,6 +125,11 @@ func (m *InsightData) ContextValidate(ctx context.Context, formats strfmt.Regist
 func (m *InsightData) contextValidateTotalValue(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.TotalValue != nil {
+
+		if swag.IsZero(m.TotalValue) { // not required
+			return nil
+		}
+
 		if err := m.TotalValue.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("total_value")
@@ -143,6 +148,11 @@ func (m *InsightData) contextValidateValues(ctx context.Context, formats strfmt.
 	for i := 0; i < len(m.Values); i++ {
 
 		if m.Values[i] != nil {
+
+			if swag.IsZero(m.Values[i]) { // not required
+				return nil
+			}
+
 			if err := m.Values[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("values" + "." + strconv.Itoa(i))

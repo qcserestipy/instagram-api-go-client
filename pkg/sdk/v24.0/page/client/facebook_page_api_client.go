@@ -64,6 +64,6 @@ func New(c Config) *FacebookPageAPI {
 
 // FacebookPageAPI is a client for facebook page API
 type FacebookPageAPI struct {
-	AccessToken *access_token.Client
+	AccessToken access_token.API
 	Transport   runtime.ClientTransport
 }

@@ -60,7 +60,7 @@ func (o *GetInsightsByMediaIDReader) ReadResponse(response runtime.ClientRespons
 		}
 		return nil, result
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /{instagram_media_id}/insights] GetInsightsByMediaID", response, response.Code())
 	}
 }
 
@@ -101,6 +101,11 @@ func (o *GetInsightsByMediaIDOK) IsServerError() bool {
 // IsCode returns true when this get insights by media Id o k response a status code equal to that given
 func (o *GetInsightsByMediaIDOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get insights by media Id o k response
+func (o *GetInsightsByMediaIDOK) Code() int {
+	return 200
 }
 
 func (o *GetInsightsByMediaIDOK) Error() string {
@@ -169,6 +174,11 @@ func (o *GetInsightsByMediaIDBadRequest) IsServerError() bool {
 // IsCode returns true when this get insights by media Id bad request response a status code equal to that given
 func (o *GetInsightsByMediaIDBadRequest) IsCode(code int) bool {
 	return code == 400
+}
+
+// Code gets the status code for the get insights by media Id bad request response
+func (o *GetInsightsByMediaIDBadRequest) Code() int {
+	return 400
 }
 
 func (o *GetInsightsByMediaIDBadRequest) Error() string {
@@ -246,6 +256,11 @@ func (o *GetInsightsByMediaIDUnauthorized) IsCode(code int) bool {
 	return code == 401
 }
 
+// Code gets the status code for the get insights by media Id unauthorized response
+func (o *GetInsightsByMediaIDUnauthorized) Code() int {
+	return 401
+}
+
 func (o *GetInsightsByMediaIDUnauthorized) Error() string {
 	return fmt.Sprintf("[GET /{instagram_media_id}/insights][%d] getInsightsByMediaIdUnauthorized  %+v", 401, o.Payload)
 }
@@ -319,6 +334,11 @@ func (o *GetInsightsByMediaIDForbidden) IsServerError() bool {
 // IsCode returns true when this get insights by media Id forbidden response a status code equal to that given
 func (o *GetInsightsByMediaIDForbidden) IsCode(code int) bool {
 	return code == 403
+}
+
+// Code gets the status code for the get insights by media Id forbidden response
+func (o *GetInsightsByMediaIDForbidden) Code() int {
+	return 403
 }
 
 func (o *GetInsightsByMediaIDForbidden) Error() string {
@@ -396,6 +416,11 @@ func (o *GetInsightsByMediaIDNotFound) IsCode(code int) bool {
 	return code == 404
 }
 
+// Code gets the status code for the get insights by media Id not found response
+func (o *GetInsightsByMediaIDNotFound) Code() int {
+	return 404
+}
+
 func (o *GetInsightsByMediaIDNotFound) Error() string {
 	return fmt.Sprintf("[GET /{instagram_media_id}/insights][%d] getInsightsByMediaIdNotFound  %+v", 404, o.Payload)
 }
@@ -469,6 +494,11 @@ func (o *GetInsightsByMediaIDInternalServerError) IsServerError() bool {
 // IsCode returns true when this get insights by media Id internal server error response a status code equal to that given
 func (o *GetInsightsByMediaIDInternalServerError) IsCode(code int) bool {
 	return code == 500
+}
+
+// Code gets the status code for the get insights by media Id internal server error response
+func (o *GetInsightsByMediaIDInternalServerError) Code() int {
+	return 500
 }
 
 func (o *GetInsightsByMediaIDInternalServerError) Error() string {
