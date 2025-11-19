@@ -103,9 +103,10 @@ func GetFollowerDynamics(accountID string, rangeStr string) (*FollowerDynamics, 
 	}
 	net := followsTotal - unfollowsTotal
 	return &FollowerDynamics{
-		Followers:    followsTotal,
+		NewFollowers: followsTotal,
 		Unfollowers:  unfollowsTotal,
 		NetFollowers: net,
-		TimeRange:    rangeStr,
+		Since:        time.Unix(since, 0),
+		Until:        time.Unix(until, 0),
 	}, nil
 }

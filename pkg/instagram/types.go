@@ -1,5 +1,7 @@
 package instagram
 
+import "time"
+
 // Reel represents an Instagram reel with its metrics
 type Reel struct {
 	ID                string  `json:"id"`
@@ -56,8 +58,9 @@ type AccountInfo struct {
 }
 
 type FollowerDynamics struct {
-	Followers    int64  `json:"new_followers"`
-	Unfollowers  int64  `json:"unfollowers"`
-	NetFollowers int64  `json:"net_followers"`
-	TimeRange    string `json:"time_range"`
+	NewFollowers int64     `json:"new_followers"`
+	Unfollowers  int64     `json:"unfollowers"`
+	NetFollowers int64     `json:"net_followers"`
+	Since        time.Time `json:"since"`
+	Until        time.Time `json:"until"`
 }
