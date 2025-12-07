@@ -30,6 +30,17 @@ func GetFollowerDynamics(ctx context.Context, svc *account.Service, accountID st
 	metrics := "follows_and_unfollows"
 	breakdown := "follow_type"
 	metricType := "total_value"
+	var validRanges = map[string]struct{}{
+		"last_7_days":  {},
+		"last_14_days": {},
+		"last_21_days": {},
+		"last_30_days": {},
+		"yesterday":    {},
+		"today":        {},
+	}
+	if _, ok := validRanges[rangeStr]; !ok {
+		return nil, fmt.Errorf("invalid range string: %s", rangeStr)
+	}
 	since, until, err := utils.TimeRange(rangeStr)
 	if err != nil {
 		return nil, fmt.Errorf("failed to parse time range: %v", err)
