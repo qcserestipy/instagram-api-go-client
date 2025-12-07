@@ -407,7 +407,7 @@ This project is licensed under the [LGPL-3.0](LICENSE.md) license © 2025 Patric
 
 ## Related Projects
 
-- [instagram-api-swagger-manifests](https://github.com/qcserestipy/instagram-api-swagger-manifests) - OpenAPI/Swagger specifications (git submodule)
+- [instagram-media-insights-swagger](https://github.com/qcserestipy/instagram-media-insights-swagger) - OpenAPI/Swagger specifications (git submodule)
 
 ## Support
 
