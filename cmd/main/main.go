@@ -48,14 +48,20 @@ func main() {
 	// 	logrus.Fatalf("fatal error: %v", utils.ParseAPIError(err, "refresh access token"))
 	// }
 
-	reels, err := instagram.GetReels(ctx, accountSvc, mediaSvc, "17841464714098258", nil, nil)
+	reels, err := instagram.GetReels(ctx, accountSvc, "17841464714098258", nil, nil)
 	if err != nil {
 		logrus.Fatalf("fatal error: %v", err)
 	}
 	for _, reel := range reels {
-		fmt.Printf("Reel ID: %s, Time: %s, Views: %d, Reach: %d, Likes: %d, Comments: %d, Shares: %d, Saves: %d, Engagement Views: %.2f%%\n",
-			reel.ID, reel.DateTime, reel.Views, reel.Reach, reel.Likes, reel.Comments, reel.Shares, reel.Saves, reel.EngagementViews)
+		fmt.Printf("Reel ID: %s\n", reel)
 	}
+
+	reelWithMetrics, err := instagram.GetReelWithMetrics(ctx, mediaSvc, reels[0])
+	if err != nil {
+		logrus.Fatalf("fatal error: %v", err)
+	}
+	fmt.Printf("Reel ID: %s, Views: %d, Reach: %d, Likes: %d, Comments: %d, Shares: %d, Saves: %d, Total Interactions: %d, Engagement Views: %.2f%%, Caption: %s\n",
+		reelWithMetrics.ID, reelWithMetrics.Views, reelWithMetrics.Reach, reelWithMetrics.Likes, reelWithMetrics.Comments, reelWithMetrics.Shares, reelWithMetrics.Saves, reelWithMetrics.TotalInteractions, reelWithMetrics.EngagementViews, reelWithMetrics.Caption)
 
 	// stories, err := instagram.GetStories("17841464714098258")
 	// if err != nil {
