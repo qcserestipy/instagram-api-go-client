@@ -6,7 +6,7 @@
 [![CodeQL](https://github.com/qcserestipy/instagram-api-go-client/actions/workflows/codeql.yml/badge.svg)](https://github.com/qcserestipy/instagram-api-go-client/actions/workflows/codeql.yml)
 [![Go Reference](https://pkg.go.dev/badge/github.com/qcserestipy/instagram-api-go-client.svg)](https://pkg.go.dev/github.com/qcserestipy/instagram-api-go-client)
 [![Go Report Card](https://goreportcard.com/badge/github.com/qcserestipy/instagram-api-go-client)](https://goreportcard.com/report/github.com/qcserestipy/instagram-api-go-client)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](LICENSE)
 
 A Go client library for accessing Instagram Media and Account Insights via the Facebook Graph API v24.0. This client is generated from OpenAPI/Swagger specifications and provides type-safe access to Instagram metrics.
 
@@ -403,7 +403,7 @@ Contributions are welcome! Please feel free to submit a Pull Request. See [CONTR
 
 ## License
 
-[Add your license here]
+This project is licensed under the [LGPL-3.0](LICENSE.md) license © 2025 Patrick Eschenbach.
 
 ## Related Projects
 
