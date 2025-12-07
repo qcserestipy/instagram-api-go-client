@@ -42,21 +42,32 @@ Get insights for a specific Instagram post:
 package main
 
 import (
+    "context"
     "fmt"
+    "github.com/qcserestipy/instagram-api-go-client/pkg/client"
     "github.com/qcserestipy/instagram-api-go-client/pkg/media"
-    "github.com/qcserestipy/instagram-api-go-client/pkg/sdk/v24.0/client/insights"
+    "github.com/qcserestipy/instagram-api-go-client/pkg/sdk/v24.0/media/client/insights"
     "github.com/sirupsen/logrus"
 )
 
 func main() {
+    ctx := context.Background()
+    
+    // Create the Instagram client
+    igClient, err := client.NewDefault()
+    if err != nil {
+        logrus.Fatalf("error creating client: %v", err)
+    }
+    
     // Create parameters for media insights
     params := insights.NewGetInsightsByMediaIDParams()
-    params.InstagramMediaID = "18112405726596121"
+    params.InstagramMediaID = "123456789101112"
     params.Metric = "reach,likes,comments"
     params.Period = "day"
     
-    // Fetch media insights
-    resp, err := media.GetInsightsByMediaID(params)
+    // Create media service and fetch insights
+    svc := media.NewService(igClient)
+    resp, err := svc.GetInsightsByMediaID(ctx, params)
     if err != nil {
         logrus.Fatalf("error: %v", err)
     }
@@ -83,16 +94,26 @@ Get account-level insights with demographic breakdowns:
 package main
 
 import (
+    "context"
     "fmt"
     "github.com/qcserestipy/instagram-api-go-client/pkg/account"
-    accinsights "github.com/qcserestipy/instagram-api-go-client/pkg/sdk-account/v24.0/client/insights"
+    "github.com/qcserestipy/instagram-api-go-client/pkg/client"
+    accinsights "github.com/qcserestipy/instagram-api-go-client/pkg/sdk/v24.0/account/client/insights"
     "github.com/sirupsen/logrus"
 )
 
 func main() {
+    ctx := context.Background()
+    
+    // Create the Instagram client
+    igClient, err := client.NewDefault()
+    if err != nil {
+        logrus.Fatalf("error creating client: %v", err)
+    }
+    
     // Create parameters for account insights
     params := accinsights.NewGetInsightsByAccountIDParams()
-    params.InstagramAccountID = "17841464714098258"
+    params.InstagramAccountID = "123456789101112"
     params.Metric = "engaged_audience_demographics"
     params.Period = "lifetime"
     
@@ -105,8 +126,9 @@ func main() {
     breakdown := "country"
     params.Breakdown = &breakdown
     
-    // Fetch account insights
-    resp, err := account.GetInsightsByAccountID(params)
+    // Create account service and fetch insights
+    svc := account.NewService(igClient)
+    resp, err := svc.GetInsightsByAccountID(ctx, params)
     if err != nil {
         logrus.Fatalf("error: %v", err)
     }
@@ -171,29 +193,50 @@ Available breakdowns: `age`, `city`, `country`, `gender`, `media_product_type`, 
 .
 ├── cmd/
 │   └── main/
-│       └── main.go                  # Example application
+│       └── main.go                          # Example application
 ├── pkg/
-│   ├── client/
-│   │   └── client.go                # Unified client for both APIs
-│   ├── config/
-│   │   └── config.go                # Shared configuration
-│   ├── media/
-│   │   └── insights_handler.go      # Media insights functions
+│   ├── access/
+│   │   ├── service.go                       # Authentication service
+│   │   └── token_handler.go                 # Token handling
 │   ├── account/
-│   │   └── insights_handler.go      # Account insights functions
-│   ├── sdk/
-│   │   └── v24.0/
-│   │       ├── client/              # Generated media API client
-│   │       └── models/              # Generated media data models
-│   └── sdk-account/
+│   │   ├── service.go                       # Account service
+│   │   ├── insights_handler.go              # Account insights operations
+│   │   ├── media_handler.go                 # Account media operations
+│   │   ├── stories_handler.go               # Account stories operations
+│   │   └── user_handler.go                  # Account user operations
+│   ├── client/
+│   │   └── client.go                        # Unified client for all APIs
+│   ├── config/
+│   │   └── config.go                        # Shared configuration
+│   ├── instagram/
+│   │   ├── account-info.go                  # Account info types
+│   │   ├── demographics.go                  # Demographics data
+│   │   ├── followers.go                     # Followers data
+│   │   ├── reels.go                         # Reels data
+│   │   ├── stories.go                       # Stories data
+│   │   └── types.go                         # Common types
+│   ├── media/
+│   │   ├── service.go                       # Media service
+│   │   ├── comments_handler.go              # Media comments operations
+│   │   ├── insights_handler.go              # Media insights operations
+│   │   └── media_handler.go                 # Media operations
+│   └── sdk/
 │       └── v24.0/
-│           ├── client/              # Generated account API client
-│           └── models/              # Generated account data models
-├── api/                             # Git submodule with Swagger specs
+│           ├── media/
+│           │   ├── client/                  # Generated media API client
+│           │   └── models/                  # Generated media data models
+│           ├── account/
+│           │   ├── client/                  # Generated account API client
+│           │   └── models/                  # Generated account data models
+│           └── page/
+│               ├── client/                  # Generated page API client
+│               └── models/                  # Generated page data models
+├── api/                                     # Git submodule with Swagger specs
 │   └── v24.0/
-│       ├── swagger.yaml             # Media insights OpenAPI spec
-│       └── swagger-account.yaml     # Account insights OpenAPI spec
-├── Makefile                         # Build automation
+├── bin/
+│   └── instagram-media-insights-go-client   # Compiled binary
+├── Makefile                                 # Build automation
+├── CONTRIBUTE.md                            # Contribution guidelines
 ├── go.mod
 ├── go.sum
 └── README.md
@@ -244,19 +287,34 @@ make all
 
 ### Unified Client
 
-#### `client.Get()`
+#### `client.NewDefault() (*InstagramClient, error)`
 
-Returns a singleton instance of the unified Instagram client with both Media and Account APIs.
+Creates a new Instagram client using environment configuration (requires `ACCESS_TOKEN` env var).
 
-**Returns:** `(*client.InstagramClient, error)`
+**Returns:** `(*InstagramClient, error)`
 
 The `InstagramClient` struct provides:
 - `Media` - Instagram Media Insights API client
 - `Account` - Instagram Account Insights API client
+- `Page` - Facebook Page API client
 
-### Media Insights
+#### `client.NewFromConfig(apiURL *url.URL, authInfo runtime.ClientAuthInfoWriter) (*InstagramClient, error)`
 
-#### `media.GetInsightsByMediaID(params *insights.GetInsightsByMediaIDParams)`
+Creates a new Instagram client with custom configuration.
+
+**Parameters:**
+- `apiURL` - Base URL for the API
+- `authInfo` - Authentication info writer
+
+**Returns:** `(*InstagramClient, error)`
+
+### Media Insights Service
+
+#### `media.NewService(c *InstagramClient) *Service`
+
+Creates a new media insights service.
+
+#### `service.GetInsightsByMediaID(ctx context.Context, params *insights.GetInsightsByMediaIDParams) (*insights.GetInsightsByMediaIDOK, error)`
 
 Fetches insights for a specific Instagram media by its ID.
 
@@ -269,9 +327,13 @@ Fetches insights for a specific Instagram media by its ID.
 
 **Returns:** `(*insights.GetInsightsByMediaIDOK, error)`
 
-### Account Insights
+### Account Insights Service
 
-#### `account.GetInsightsByAccountID(params *insights.GetInsightsByAccountIDParams)`
+#### `account.NewService(c *InstagramClient) *Service`
+
+Creates a new account insights service.
+
+#### `service.GetInsightsByAccountID(ctx context.Context, params *insights.GetInsightsByAccountIDParams) (*insights.GetInsightsByAccountIDOK, error)`
 
 Fetches insights for an Instagram account.
 
@@ -327,7 +389,7 @@ make gen-all-clients
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Please feel free to submit a Pull Request. See [CONTRIBUTE.md](CONTRIBUTE.md) for guidelines.
 
 ## License
 
@@ -335,7 +397,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Related Projects
 
-- [instagram-media-insights-swagger](https://github.com/qcserestipy/instagram-media-insights-swagger) - OpenAPI/Swagger specifications
+- [instagram-api-swagger-manifests](https://github.com/qcserestipy/instagram-api-swagger-manifests) - OpenAPI/Swagger specifications (git submodule)
 
 ## Support
 
