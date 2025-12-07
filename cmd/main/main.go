@@ -48,7 +48,7 @@ func main() {
 	// 	logrus.Fatalf("fatal error: %v", utils.ParseAPIError(err, "refresh access token"))
 	// }
 
-	reels, err := instagram.GetReels(ctx, accountSvc, "17841464714098258", nil, nil)
+	reels, err := instagram.GetReels(ctx, accountSvc, "17841464714098258", "last_30_days")
 	if err != nil {
 		logrus.Fatalf("fatal error: %v", err)
 	}

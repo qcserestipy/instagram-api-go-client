@@ -30,44 +30,18 @@ func GetFollowerDynamics(ctx context.Context, svc *account.Service, accountID st
 	metrics := "follows_and_unfollows"
 	breakdown := "follow_type"
 	metricType := "total_value"
-	var since int64
-	var until int64
-
-	now := time.Now().UTC()
-	switch rangeStr {
-	case "last_14_days":
-		since = now.Add(-14 * 24 * time.Hour).Unix()
-		until = now.Unix()
-	case "last_21_days":
-		since = now.Add(-21 * 24 * time.Hour).Unix()
-		until = now.Unix()
-	case "last_30_days":
-		since = now.Add(-30 * 24 * time.Hour).Unix()
-		until = now.Unix()
-	case "last_7_days":
-		since = now.Add(-7 * 24 * time.Hour).Unix()
-		until = now.Unix()
-	case "yesterday":
-		startToday := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, time.UTC)
-		startYesterday := startToday.AddDate(0, 0, -1)
-		since = startYesterday.Unix()
-		until = startToday.Unix() - 1
-	case "today":
-		startToday := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, time.UTC)
-		since = startToday.Unix()
-		until = now.Unix()
-	default:
-		return nil, fmt.Errorf("unsupported range: %s", rangeStr)
+	since, until, err := utils.TimeRange(rangeStr)
+	if err != nil {
+		return nil, fmt.Errorf("failed to parse time range: %v", err)
 	}
-
 	insightsResponse, err := svc.GetInsightsByAccountID(ctx, &insights.GetInsightsByAccountIDParams{
 		InstagramAccountID: accountID,
 		Metric:             metrics,
 		Period:             "day",
 		Breakdown:          &breakdown,
 		MetricType:         &metricType,
-		Since:              &since,
-		Until:              &until,
+		Since:              since,
+		Until:              until,
 	})
 	if err != nil {
 		return nil, fmt.Errorf("failed to %v", utils.ParseAPIError(err, "get follower dynamics"))
@@ -103,11 +77,11 @@ func GetFollowerDynamics(ctx context.Context, svc *account.Service, accountID st
 		}
 	}
 	net := followsTotal - unfollowsTotal
-	parsedSince, err := utils.ParseTimestamp(time.Unix(since, 0).Format(time.RFC3339))
+	parsedSince, err := utils.ParseTimestamp(time.Unix(*since, 0).Format(time.RFC3339))
 	if err != nil {
 		return nil, fmt.Errorf("could not parse since timestamp: %v", err)
 	}
-	parsedUntil, err := utils.ParseTimestamp(time.Unix(until, 0).Format(time.RFC3339))
+	parsedUntil, err := utils.ParseTimestamp(time.Unix(*until, 0).Format(time.RFC3339))
 	if err != nil {
 		return nil, fmt.Errorf("could not parse until timestamp: %v", err)
 	}

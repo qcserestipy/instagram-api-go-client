@@ -17,7 +17,11 @@ import (
 // GetReels fetches all reels (VIDEO media) for a given Instagram account
 // and returns them with their metrics (views, likes, comments, caption).
 // since and until are optional Unix timestamp filters - pass nil to omit them.
-func GetReels(ctx context.Context, accountsvc *account.Service, accountID string, since *int64, until *int64) ([]string, error) {
+func GetReels(ctx context.Context, accountsvc *account.Service, accountID string, rangeStr string) ([]string, error) {
+	since, until, err := utils.TimeRange(rangeStr)
+	if err != nil {
+		return nil, fmt.Errorf("failed to parse time range: %v", err)
+	}
 	// Get all media for the account
 	accountMediaResponse, err := accountsvc.GetMediaByUserID(ctx, &accountMediaApiModel.GetMediaByUserIDParams{
 		InstagramAccountID: accountID,
@@ -35,8 +39,12 @@ func GetReels(ctx context.Context, accountsvc *account.Service, accountID string
 	return reelIDs, nil
 }
 
-func GetReelsWithMetrics(ctx context.Context, accountsvc *account.Service, mediasvc *media.Service, accountID string, since *int64, until *int64) ([]Reel, error) {
+func GetReelsWithMetrics(ctx context.Context, accountsvc *account.Service, mediasvc *media.Service, accountID string, rangeStr string) ([]Reel, error) {
 	var reels []Reel
+	since, until, err := utils.TimeRange(rangeStr)
+	if err != nil {
+		return nil, fmt.Errorf("failed to parse time range: %v", err)
+	}
 
 	// Get all media for the account
 	accountMediaResponse, err := accountsvc.GetMediaByUserID(ctx, &accountMediaApiModel.GetMediaByUserIDParams{
